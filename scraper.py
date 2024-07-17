@@ -6,6 +6,8 @@ import re
 import sys
 from queue import Queue
 
+#  python pipeline.py manipulating-harem-god.xlsx 66976190151e9be6d32445c9
+
 
 def extract_chapter_number(title):
     match = re.search(r"Chapter (\d+)", title)
@@ -57,18 +59,18 @@ def process_chapter(novel_id, chapter, retry_queue):
     h4_content, p_content = scrape_website(chapter["url"])
     success = send_to_api(novel_id, h4_content, p_content, chapter["title"])
     if not success:
-        retry_queue.put((novel_id, h4_content, p_content))
-    time.sleep(1)
+        retry_queue.put((novel_id, h4_content, p_content, chapter["title"]))
+    # time.sleep(1)
 
 
 def retry_failed_chapters(retry_queue):
     print("\nRetrying failed chapters:")
     while not retry_queue.empty():
-        novel_id, h4_content, p_content = retry_queue.get()
-        success = send_to_api(novel_id, h4_content, p_content)
+        novel_id, h4_content, p_content, title = retry_queue.get()
+        success = send_to_api(novel_id, h4_content, p_content, title)
         if not success:
             print(f"Retry failed for {h4_content}")
-        time.sleep(1)
+        # time.sleep(1)
 
 
 def send_to_api(novel_id, h4_content, p_content, title):
@@ -103,10 +105,12 @@ def send_to_api(novel_id, h4_content, p_content, title):
 if __name__ == "__main__":
     excel_file = "the-conqueror-path.xlsx"
     chapter_data = read_and_sort_excel(excel_file)
-
     retry_queue = Queue()
+    start_chatper = 698
 
     for chapter in chapter_data:
+        if chapter["chapter_number"] < start_chatper:
+            continue
         process_chapter(sys.argv[1], chapter, retry_queue)
 
     print(

@@ -16,6 +16,7 @@ export function processPContentData(data) {
 }
 
 export function processH4ContentData(data) {
+	console.log(data, "data");
 	const cleanedData = data.map((item) => {
 		// Remove the word "Chapter" and the colon
 		let cleanedItem = item.replace("Chapter", "").replace(":", "").trim();
@@ -26,10 +27,14 @@ export function processH4ContentData(data) {
 		return cleanedItem;
 	});
 
+	console.log(cleanedData, "cleanedData");
+
 	const structuredData = cleanedData.map((item) => ({
 		id: item.split(" ")[0].trim(),
 		title: item.split(" ").slice(1).join(" ").trim(),
 	}));
+
+	console.log(structuredData, "structuredData");
 
 	return structuredData;
 }
