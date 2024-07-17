@@ -37,14 +37,31 @@ export function processPContentData(data) {
 // 	return structuredData;
 // }
 
+// export function processH4ContentData(data) {
+// 	return data.map((title) => {
+// 		// Extract the chapter number using regex
+// 		let chapterMatch = title.match(/Chapter\s*(\d+)/i);
+// 		let chapterNumber = chapterMatch ? parseInt(chapterMatch[1]) : null;
+
+// 		// Extract the chapter title using regex
+// 		let titleMatch = title.match(/Chapter\s*\d+\s*[-\s]*(.+)/i);
+// 		let chapterTitle = titleMatch ? titleMatch[1].trim() : null;
+
+// 		return {
+// 			id: chapterNumber,
+// 			title: chapterTitle,
+// 		};
+// 	});
+// }
+
 export function processH4ContentData(data) {
 	return data.map((title) => {
 		// Extract the chapter number using regex
-		let chapterMatch = title.match(/Chapter\s*(\d+)/i);
-		let chapterNumber = chapterMatch ? parseInt(chapterMatch[1]) : null;
+		let chapterMatch = title.match(/Chapter\s*(c?-?\d+)/i);
+		let chapterNumber = chapterMatch ? chapterMatch[1] : null;
 
 		// Extract the chapter title using regex
-		let titleMatch = title.match(/Chapter\s*\d+\s*[-\s]*(.+)/i);
+		let titleMatch = title.match(/Chapter\s*c?-?\d+\s*[-\s]*(.+)/i);
 		let chapterTitle = titleMatch ? titleMatch[1].trim() : null;
 
 		return {

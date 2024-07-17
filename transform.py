@@ -22,13 +22,13 @@ def reorganize_excel(input_file, output_file="temp_output.xlsx"):
         hrefs.extend(df[href_col].tolist())
 
     # Create a new dataframe with reorganized data
-    new_df = pd.DataFrame({"Label": labels, "Href": hrefs})
+    new_df = pd.DataFrame({"Column1": labels, "Column2": hrefs})
 
     # Remove NaN values
     new_df = new_df.dropna()
 
-    # Save to a new Excel file
-    new_df.to_excel(output_file, index=False)
+    # Save to a new Excel file without column names
+    new_df.to_excel(output_file, index=False, header=False)
 
     print(f"Data reorganized and saved to {output_file}")
 
