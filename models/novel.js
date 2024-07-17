@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 const novelSchema = new mongoose.Schema(
 	{
-		title: { type: String, required: true },
+		id: { type: String },
+		title: { type: String, required: true, unique: true },
 		author: { type: String, required: true },
 		imageUrl: { type: String },
 		description: { type: String },
