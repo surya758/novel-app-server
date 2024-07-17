@@ -15,25 +15,41 @@ export function processPContentData(data) {
 	return structuredData;
 }
 
+// export function processH4ContentData(data) {
+// 	const cleanedData = data.map((item) => {
+// 		// Remove the word "Chapter" and the colon
+// 		let cleanedItem = item.replace("Chapter", "").replace(":", "").trim();
+
+// 		// Remove any special characters
+// 		cleanedItem = cleanedItem.replace(/[*!]/g, "");
+
+// 		return cleanedItem;
+// 	});
+
+// 	const regex = /\d+/;
+// 	const chapterNumber = cleanedData.map((item) => item.match(regex)[0]);
+
+// 	const structuredData = cleanedData.map((item) => ({
+// 		id: chapterNumber[0].trim(),
+// 		title: item.split(" ").slice(1).join(" ").trim(),
+// 	}));
+
+// 	return structuredData;
+// }
+
 export function processH4ContentData(data) {
-	const cleanedData = data.map((item) => {
-		// Remove the word "Chapter" and the colon
-		let cleanedItem = item.replace("Chapter", "").replace(":", "").trim();
+	return data.map((title) => {
+		// Extract the chapter number using regex
+		let chapterMatch = title.match(/Chapter\s*(\d+)/i);
+		let chapterNumber = chapterMatch ? parseInt(chapterMatch[1]) : null;
 
-		// Remove any special characters
-		cleanedItem = cleanedItem.replace(/[*!]/g, "");
+		// Extract the chapter title using regex
+		let titleMatch = title.match(/Chapter\s*\d+\s*[-\s]*(.+)/i);
+		let chapterTitle = titleMatch ? titleMatch[1].trim() : null;
 
-		return cleanedItem;
+		return {
+			id: chapterNumber,
+			title: chapterTitle,
+		};
 	});
-
-	// grab the recurring integer in the string; [ '698-Destined Love?' ] => 698
-	const regex = /\d+/;
-	const chapterNumber = cleanedData.map((item) => item.match(regex)[0]);
-
-	const structuredData = cleanedData.map((item) => ({
-		id: chapterNumber[0].trim(),
-		title: item.split(" ").slice(1).join(" ").trim(),
-	}));
-
-	return structuredData;
 }

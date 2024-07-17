@@ -106,11 +106,8 @@ if __name__ == "__main__":
     excel_file = "the-conqueror-path.xlsx"
     chapter_data = read_and_sort_excel(excel_file)
     retry_queue = Queue()
-    start_chatper = 22
 
     for chapter in chapter_data:
-        if chapter["chapter_number"] < start_chatper:
-            continue
         process_chapter(sys.argv[1], chapter, retry_queue)
 
     print(
