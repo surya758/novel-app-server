@@ -29,6 +29,12 @@ export function processH4ContentData(data) {
 
 	console.log(cleanedData, "cleanedData");
 
+	// grab the recurring integer in the string; [ '698-Destined Love?' ] => 698
+	const regex = /\d+/;
+	const chapterNumber = cleanedData.map((item) => item.match(regex)[0]);
+
+	console.log(chapterNumber, "chapterNumber");
+
 	const structuredData = cleanedData.map((item) => ({
 		id: item.split(" ")[0].trim(),
 		title: item.split(" ").slice(1).join(" ").trim(),
