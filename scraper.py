@@ -103,7 +103,7 @@ def send_to_api(novel_id, h4_content, p_content, title):
 
 # Main execution
 if __name__ == "__main__":
-    excel_file = "the-conqueror-path.xlsx"
+    excel_file = sys.argv[2]
     chapter_data = read_and_sort_excel(excel_file)
     retry_queue = Queue()
 

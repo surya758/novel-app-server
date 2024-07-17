@@ -1,10 +1,13 @@
 import subprocess
 import sys
+import time
 
 #  python pipeline.py manipulating-harem-god.xlsx 66976190151e9be6d32445c9
 
 
 def run_pipeline(input_file, id):
+    # measure the time taken to run the pipeline
+    start_time = time.time()
     # Step 1: Run transform.py
     print("Running transform.py...")
     subprocess.run(["python", "transform.py", input_file], check=True)
@@ -15,7 +18,10 @@ def run_pipeline(input_file, id):
         ["python", "scraper.py", id, "temp_output.xlsx", "final_output.xlsx"],
         check=True,
     )
+    end_time = time.time()
+    print(f"Time taken: {end_time - start_time:.2f} seconds")
 
+    # Step 3: Run cleanup.py
     print("Pipeline completed. Results are in final_output.xlsx")
 
 
