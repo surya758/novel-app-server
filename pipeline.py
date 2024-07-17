@@ -22,7 +22,7 @@ def run_pipeline(input_file, id):
     print(f"Time taken: {end_time - start_time:.2f} seconds")
 
     # Step 3: Run cleanup.py
-    print("Pipeline completed. Results are in final_output.xlsx")
+    print("Pipeline completed.")
 
 
 if __name__ == "__main__":
