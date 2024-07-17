@@ -25,11 +25,13 @@ router.get("/", async (req, res) => {
 
 // Get all novel chapter number and title
 router.get("/:novelId/title", async (req, res) => {
+	// sorted by chapter number
 	try {
 		const novel = await Novel.findById(req.params.novelId).populate(
 			"chapters",
 			"chapterNumber title"
 		);
+
 		if (!novel) return res.status(404).json({ message: "Novel not found" });
 		res.json(novel.chapters);
 	} catch (error) {
