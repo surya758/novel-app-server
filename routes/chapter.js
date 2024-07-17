@@ -15,6 +15,9 @@ router.post("/", async (req, res) => {
 		const processedH4Content = processH4ContentData(h4_content)[0];
 		const processedPContent = processPContentData(p_content);
 
+		console.log(processedPContent, "processedPContent");
+		console.log(processedH4Content, "processedH4Content");
+
 		const chapter = new Chapter({
 			novel: novel_id,
 			title: processedH4Content.title,
