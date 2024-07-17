@@ -14,29 +14,6 @@ export function processPContentData(data) {
 
 	return structuredData;
 }
-
-// export function processH4ContentData(data) {
-// 	const cleanedData = data.map((item) => {
-// 		// Remove the word "Chapter" and the colon
-// 		let cleanedItem = item.replace("Chapter", "").replace(":", "").trim();
-
-// 		// Remove any special characters
-// 		cleanedItem = cleanedItem.replace(/[*!]/g, "");
-
-// 		return cleanedItem;
-// 	});
-
-// 	const regex = /\d+/;
-// 	const chapterNumber = cleanedData.map((item) => item.match(regex)[0]);
-
-// 	const structuredData = cleanedData.map((item) => ({
-// 		id: chapterNumber[0].trim(),
-// 		title: item.split(" ").slice(1).join(" ").trim(),
-// 	}));
-
-// 	return structuredData;
-// }
-
 // export function processH4ContentData(data) {
 // 	return data.map((title) => {
 // 		// Extract the chapter number using regex
@@ -59,6 +36,14 @@ export function processH4ContentData(data) {
 		// Extract the chapter number using regex
 		let chapterMatch = title.match(/Chapter\s*(c?-?\d+)/i);
 		let chapterNumber = chapterMatch ? chapterMatch[1] : null;
+
+		// If the chapter number starts with "c-", remove it
+		if (chapterNumber && chapterNumber.startsWith("c-")) {
+			chapterNumber = chapterNumber.slice(2);
+		}
+
+		// Convert the chapter number to an integer
+		chapterNumber = parseInt(chapterNumber);
 
 		// Extract the chapter title using regex
 		let titleMatch = title.match(/Chapter\s*c?-?\d+\s*[-\s]*(.+)/i);
