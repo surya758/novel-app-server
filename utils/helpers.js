@@ -14,6 +14,7 @@ export function processPContentData(data) {
 
 	return structuredData;
 }
+
 // export function processH4ContentData(data) {
 // 	return data.map((title) => {
 // 		// Extract the chapter number using regex
