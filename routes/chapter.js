@@ -11,6 +11,8 @@ router.post("/", async (req, res) => {
 	try {
 		const { novel_id, h4_content, p_content } = req.body;
 
+		console.log(h4_content, "h4_content");
+
 		// clean the data, transform it, or prepare it for database insertion
 		const processedH4Content = processH4ContentData(h4_content)[0];
 		const processedPContent = processPContentData(p_content);
