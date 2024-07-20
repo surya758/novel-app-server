@@ -29,7 +29,7 @@ router.get("/:novelId/title", async (req, res) => {
 	try {
 		const novel = await Novel.findById(req.params.novelId).populate(
 			"chapters",
-			"chapterNumber title"
+			"chapterNumber title isArchieved"
 		);
 
 		if (!novel) return res.status(404).json({ message: "Novel not found" });
