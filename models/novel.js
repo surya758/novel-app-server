@@ -8,6 +8,7 @@ const novelSchema = new mongoose.Schema(
 		imageUrl: { type: String },
 		description: { type: String },
 		genre: { type: String },
+		isArchieved: { type: Boolean, default: false },
 		chapters: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chapter" }],
 	},
 	{ timestamps: true }
