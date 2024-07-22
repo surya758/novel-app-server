@@ -88,4 +88,17 @@ router.post("/:id/characters", async (req, res) => {
 	}
 });
 
+// Fetch all characters of a novel
+router.get("/:id/characters", async (req, res) => {
+	try {
+		const novel = await Novel.findById(req.params.id);
+		if (!novel) {
+			return res.status(404).json({ message: "Novel not found" });
+		}
+		res.json(novel.characters);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+});
+
 export default router;
