@@ -43,7 +43,7 @@ router.get("/:novelId/title", async (req, res) => {
 // Get a specific novel
 router.get("/:id", async (req, res) => {
 	try {
-		const novel = await Novel.findById(req.params.id).populate("chapters");
+		const novel = await Novel.findById(req.params.id);
 		if (!novel) return res.status(404).json({ message: "Novel not found" });
 		res.json(novel);
 	} catch (error) {
