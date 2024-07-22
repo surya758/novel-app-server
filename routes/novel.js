@@ -72,4 +72,19 @@ router.delete("/:id", async (req, res) => {
 	}
 });
 
+// Add a character to a novel
+router.post("/:id/characters", async (req, res) => {
+	try {
+		const novel = await Novel.findById(req.params.id);
+		if (!novel) {
+			return res.status(404).json({ message: "Novel not found" });
+		}
+		novel.characters.push(req.body);
+		const updatedNovel = await novel.save();
+		res.status(201).json(updatedNovel.characters[updatedNovel.characters.length - 1]);
+	} catch (error) {
+		res.status(400).json({ message: error.message });
+	}
+});
+
 export default router;
