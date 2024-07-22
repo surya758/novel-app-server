@@ -16,7 +16,8 @@ router.post("/", async (req, res) => {
 // Get all novels
 router.get("/", async (req, res) => {
 	try {
-		const novels = await Novel.find();
+		// find by query parameters
+		const novels = await Novel.find(req.query);
 		res.json(novels);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
