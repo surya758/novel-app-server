@@ -12,7 +12,6 @@ const characterSchema = new mongoose.Schema({
 
 const novelSchema = new mongoose.Schema(
 	{
-		id: { type: String },
 		title: { type: String, required: true, unique: true },
 		author: { type: String, required: true },
 		imageUrl: { type: String },
