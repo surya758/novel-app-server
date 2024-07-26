@@ -5,6 +5,7 @@ const router = express.Router();
 // Create a new novel
 router.post("/", async (req, res) => {
 	try {
+		console.log(req.body);
 		const novel = new Novel(req.body);
 		await novel.save();
 		res.status(201).json(novel);

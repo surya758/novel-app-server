@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { v4 as uuidv4 } from "uuid";
 
 const characterSchema = new mongoose.Schema({
 	name: { type: String, required: true },
@@ -12,6 +13,7 @@ const characterSchema = new mongoose.Schema({
 
 const novelSchema = new mongoose.Schema(
 	{
+		id: { type: String, unique: true },
 		title: { type: String, required: true, unique: true },
 		author: { type: String, required: true },
 		imageUrl: { type: String },
@@ -23,5 +25,12 @@ const novelSchema = new mongoose.Schema(
 	},
 	{ timestamps: true }
 );
+
+novelSchema.pre("save", function (next) {
+	if (!this.id) {
+		this.id = uuidv4();
+	}
+	next();
+});
 
 export default mongoose.model("Novel", novelSchema);
