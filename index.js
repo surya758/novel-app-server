@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import { configDotenv } from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
+import compression from "compression";
 
 import novelRoutes from "./routes/novel.js";
 import chapterRoutes from "./routes/chapter.js";
@@ -16,6 +17,12 @@ const app = express();
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
+app.use(
+	compression({
+		level: 6, // Default compression level is 6
+		threshold: 10 * 1000, // Only compress responses above 10KB
+	})
+);
 
 mongoose
 	.connect(process.env.MONGODB_URL)

@@ -3,6 +3,7 @@ import express from "express";
 import Chapter from "../models/chapter.js";
 import Novel from "../models/novel.js";
 import { processH4ContentData, processPContentData } from "../utils/helpers.js";
+import cache from "../utils/redis.js";
 
 const router = express.Router();
 
@@ -50,7 +51,7 @@ router.get("/novel/:novelId", async (req, res) => {
 });
 
 // Get a specific chapter
-router.get("/:id", async (req, res) => {
+router.get("/:id", cache.route(), async (req, res) => {
 	try {
 		const chapter = await Chapter.findById(req.params.id);
 		if (!chapter) return res.status(404).json({ message: "Chapter not found" });

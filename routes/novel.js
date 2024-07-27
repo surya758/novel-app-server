@@ -1,5 +1,6 @@
 import express from "express";
 import Novel from "../models/novel.js";
+import cache from "../utils/redis.js";
 
 const router = express.Router();
 // Create a new novel
@@ -15,7 +16,7 @@ router.post("/", async (req, res) => {
 });
 
 // Get all novels
-router.get("/", async (req, res) => {
+router.get("/", cache.route(), async (req, res) => {
 	try {
 		// find by query parameters
 		const novels = await Novel.find(req.query, { chapters: 0 });
@@ -26,7 +27,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get all novel chapter number and title
-router.get("/:novelId/title", async (req, res) => {
+router.get("/:novelId/title", cache.route(), async (req, res) => {
 	// sorted by chapter number
 	try {
 		const novel = await Novel.findById(req.params.novelId).populate(
