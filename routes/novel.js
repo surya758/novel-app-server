@@ -102,4 +102,23 @@ router.get("/:id/characters", async (req, res) => {
 	}
 });
 
+// Delete a character of a novel
+router.delete("/:id/characters/:characterId", async (req, res) => {
+	try {
+		const novel = await Novel.findById(req.params.id);
+		if (!novel) {
+			return res.status(404).json({ message: "Novel not found" });
+		}
+		const character = novel.characters.id(req.params.characterId);
+		if (!character) {
+			return res.status(404).json({ message: "Character not found" });
+		}
+		character.remove();
+		await novel.save();
+		res.json({ message: "Character deleted" });
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+});
+
 export default router;
