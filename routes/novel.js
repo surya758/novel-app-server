@@ -102,22 +102,28 @@ router.get("/:id/characters", async (req, res) => {
 	}
 });
 
-// Delete a character of a novel
-router.delete("/:id/characters/:characterId", async (req, res) => {
+router.delete("/:novelId/characters/:characterId", async (req, res) => {
+	const { novelId, characterId } = req.params;
+
 	try {
-		const novel = await Novel.findById(req.params.id);
+		const novel = await Novel.findById(novelId);
+
 		if (!novel) {
 			return res.status(404).json({ message: "Novel not found" });
 		}
-		const character = novel.characters.id(req.params.characterId);
-		if (!character) {
+
+		// Check if the character exists
+		if (!novel.characters.id(characterId)) {
 			return res.status(404).json({ message: "Character not found" });
 		}
-		character.remove();
-		await novel.save();
-		res.json({ message: "Character deleted" });
+
+		// Remove the character using $pull operator
+		await Novel.updateOne({ _id: novelId }, { $pull: { characters: { _id: characterId } } });
+
+		res.json({ message: "Character deleted successfully" });
 	} catch (error) {
-		res.status(500).json({ message: error.message });
+		console.error("Error deleting character:", error);
+		res.status(500).json({ message: "An error occurred while deleting the character" });
 	}
 });
 
