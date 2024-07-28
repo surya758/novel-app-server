@@ -3,10 +3,10 @@ import { S3Client } from "@aws-sdk/client-s3";
 import multerS3 from "multer-s3";
 
 const s3Client = new S3Client({
-	region: process.env.AWS_REGION,
+	region: "ap-south-1",
 	accessKeyId: process.env.AWS_ACCESS_KEY_ID,
 	secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-	endpoint: process.env.AWS_ENDPOINT,
+	endpoint: "https://novel-bucket.s3.ap-south-1.amazonaws.com",
 });
 
 // Configure multer for S3 upload
