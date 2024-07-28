@@ -1,7 +1,7 @@
 import express from "express";
 import Novel from "../models/novel.js";
 import cache from "../utils/redis.js";
-import upload from "../utils/s3.js";
+import upload, { deleteObject } from "../utils/s3.js";
 
 const router = express.Router();
 // Create a new novel
@@ -79,6 +79,11 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
 	try {
 		const novel = await Novel.findByIdAndDelete(req.params.id);
+		// delete the novel file from S3
+		if (novel.type === "uploaded") {
+			const key = novel.fileUrl.split("/").slice(-2).join("/");
+			deleteObject(key);
+		}
 		if (!novel) return res.status(404).json({ message: "Novel not found" });
 		res.json({ message: "Novel deleted" });
 	} catch (error) {

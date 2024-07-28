@@ -20,4 +20,8 @@ const upload = multer({
 	}),
 });
 
+export const deleteObject = async (key) => {
+	await s3Client.send(new DeleteObjectCommand({ Bucket: "novel-bucket", Key: key }));
+};
+
 export default upload;
