@@ -6,7 +6,7 @@ const s3Client = new S3Client({
 	region: "ap-south-1",
 	accessKeyId: process.env.AWS_ACCESS_KEY_ID,
 	secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-	endpoint: "https://novel-bucket.s3.ap-south-1.amazonaws.com",
+	endpoint: "s3-ap-south-1.amazonaws.com",
 });
 
 // Configure multer for S3 upload
