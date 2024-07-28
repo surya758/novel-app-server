@@ -22,6 +22,8 @@ const novelSchema = new mongoose.Schema(
 		characters: [characterSchema],
 		isArchieved: { type: Boolean, default: false },
 		chapters: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chapter" }],
+		type: { type: String, enum: ["normal", "uploaded"], default: "normal" },
+		fileUrl: { type: String }, // S3 URL for uploaded files
 	},
 	{ timestamps: true }
 );
