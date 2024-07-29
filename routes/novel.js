@@ -1,23 +1,13 @@
 import express from "express";
 import Novel from "../models/novel.js";
 import cache from "../utils/redis.js";
-import upload, { deleteObject } from "../utils/s3.js";
+import { deleteObject } from "../utils/s3.js";
 
 const router = express.Router();
 // Create a new novel
-router.post("/", upload.single("file"), async (req, res) => {
+router.post("/", async (req, res) => {
 	try {
 		const novelData = req.body;
-
-		if (req.file) {
-			// This is an uploaded novel
-			novelData.type = "uploaded";
-			novelData.fileUrl = req.file.location; // S3 URL
-		} else {
-			// This is a normal novel
-			novelData.type = "normal";
-		}
-
 		const novel = new Novel(novelData);
 		await novel.save();
 		res.status(201).json(novel);

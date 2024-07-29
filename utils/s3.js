@@ -12,7 +12,7 @@ const s3Client = new S3Client({
 // Configure multer for S3 upload
 const upload = multer({
 	storage: multerS3({
-		limits: { fileSize: 50 * 1024 * 1024 },
+		limit: { fileSize: 50 * 1024 * 1024 }, // 50MB
 		s3: s3Client,
 		bucket: "novel-bucket",
 		key: function (req, file, cb) {
