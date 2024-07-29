@@ -82,7 +82,9 @@ router.delete("/:id", async (req, res) => {
 		// delete the novel file from S3
 		if (novel.type === "uploaded") {
 			const key = novel.fileUrl.split("/").slice(-2).join("/");
+			console.log(key);
 			deleteObject(key);
+			console.log("deleted");
 		}
 		if (!novel) return res.status(404).json({ message: "Novel not found" });
 		res.json({ message: "Novel deleted" });
